@@ -1,7 +1,12 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    id ("com.android.application")
+    id ("org.jetbrains.kotlin.android")
+    id ("kotlin-kapt")
+    id ("dagger.hilt.android.plugin")
+    id ("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
+
+
 
 android {
     namespace = "com.ibuqa.screening"
@@ -66,4 +71,11 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    // Dagger Hilt
+    implementation ("com.google.dagger:hilt-android:2.44.2")
+    kapt ("com.google.dagger:hilt-compiler:2.44.2")
+    implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
+
+
 }
