@@ -1,0 +1,41 @@
+query UserRepository($data: String!){
+    search(
+        type: REPOSITORY,
+        query: $data,
+        first: 100
+    ) {
+        repos: edges {
+            repo: node {
+                ... on Repository {
+                    url
+                    issues(first: 100, orderBy: {field: CREATED_AT, direction: DESC}) {
+                        totalCount
+                        nodes {
+                            title
+                            body
+                            createdAt
+                            state
+                            updatedAt
+                            author {
+                                login
+                            }
+                            comments{
+                                totalCount
+                            }
+                            labels(first: 5) {
+                                nodes {
+                                    name
+                                    color
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        pageInfo {
+            endCursor
+            hasNextPage
+        }
+    }
+}
