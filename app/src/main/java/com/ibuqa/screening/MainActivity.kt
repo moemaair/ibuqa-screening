@@ -60,6 +60,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
@@ -71,6 +72,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.ibuqa.screening.data.DateUtil
 import com.ibuqa.screening.domain.UserIssue
+import com.ibuqa.screening.presentation.DropdownSortBy
+import com.ibuqa.screening.presentation.DropdownState
 import com.ibuqa.screening.presentation.MainViewModel
 import com.ibuqa.screening.presentation.SearchAndFilterScreen
 import com.ibuqa.screening.ui.theme.IbuqascreeningTheme
@@ -110,6 +113,8 @@ fun Home(
 
 ) {
     var viewModel: MainViewModel = hiltViewModel()
+    var showSortByDropdown by remember { mutableStateOf(false) }
+    var showStateDropdown by remember { mutableStateOf(false) }
     val isVisible by remember {
         derivedStateOf {
             viewModel.searchQuery.value.isNotBlank()
@@ -125,18 +130,6 @@ fun Home(
                 .fillMaxHeight()
                 //.padding(15.dp)
         ) {
-            if(state.isLoading ) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            }
-            if(!isVisible){
-                Text(text = "Try searching for a Github Username",
-                    color = if(isSystemInDarkTheme()) MaterialTheme.colors.primary else Color.LightGray,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.TopCenter)
-                        .padding(top = 150.dp),
-                    textAlign = TextAlign.Center, fontSize = 14.sp)
-            }
             Column(modifier = Modifier) {
                 SearchAndFilterScreen()
 
@@ -170,19 +163,39 @@ fun Home(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){
-                    TextButton(onClick = { /*TODO*/ }) {
-                        Text(text = "Sort by", style = androidx.compose.material3.MaterialTheme.typography.titleMedium, color = Color(0xFF2452C9))
-                        Icon(imageVector = Icons.Default.ArrowDropDown, contentDescription = "")
+                    TextButton(onClick = {
+                        showSortByDropdown = true
+                    }) {
+                        Column {
+                            Row{
+                                Text(text = "Sort by", style = androidx.compose.material3.MaterialTheme.typography.titleMedium, color = Color(0xFF2452C9))
+                                Icon(imageVector = Icons.Default.ArrowDropDown, contentDescription = "")
+                            }
+                            if (showSortByDropdown) {
+                                DropdownSortBy()
+                            }
+
+                        }
                     }
-                    TextButton(onClick = { /*TODO*/ }) {
-                        Text(text = "State", style = androidx.compose.material3.MaterialTheme.typography.titleMedium, color = Color(0xFF2452C9))
-                        Icon(imageVector = Icons.Default.ArrowDropDown, contentDescription = "")
+                    TextButton(onClick = {
+                        showStateDropdown = true
+                    }) {
+                        Column {
+                            Row{
+                                Text(text = "State", style = androidx.compose.material3.MaterialTheme.typography.titleMedium, color = Color(0xFF2452C9))
+                                Icon(imageVector = Icons.Default.ArrowDropDown, contentDescription = "")
+                            }
+                            if (showStateDropdown) {
+                                DropdownState(
+
+                                )
+                            }
+
+                        }
+
                     }
 
-                    TextButton(onClick = { /*TODO*/ }) {
-                        Text(text = "Sort by", style = androidx.compose.material3.MaterialTheme.typography.titleMedium, color = Color(0xFF2452C9))
-                        Icon(imageVector = Icons.Default.ArrowDropDown, contentDescription = "")
-                    }
+
 
                 }
             }
@@ -196,6 +209,22 @@ fun Home(
                 .weight(0.7f) // 70% width
                 .fillMaxHeight()
         ) {
+            Box(modifier = Modifier
+                .fillMaxSize()
+            ){
+                if(state.isLoading ) {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                }
+                if(!isVisible){
+                    Text(text = "Try searching for a Github Repository",
+                        //color = if(isSystemInDarkTheme()) MaterialTheme.colors.primary else Color.LightGray,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.TopCenter)
+                            .padding(top = 150.dp),
+                        textAlign = TextAlign.Center, fontSize = 14.sp)
+                }
+            }
 
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
@@ -243,7 +272,7 @@ private fun IssueItem(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ){
-            Text(text = "Opened at $createdAtModified")
+            Text(text = "Opened at $createdAtModified", color = Color.Gray,fontWeight = FontWeight.SemiBold)
             StateTagButton(
                 text = issue.state
             )
@@ -254,7 +283,8 @@ private fun IssueItem(
             modifier = Modifier
 
         ) {
-            Text(text = issue.title)
+            Text(text = issue.title, style = androidx.compose.material3.MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(5.dp))
             Text(text = issue.body.toString())
         }
         Spacer(modifier = Modifier.height(30.dp))
