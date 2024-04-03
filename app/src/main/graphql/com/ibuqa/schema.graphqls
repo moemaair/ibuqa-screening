@@ -16089,7 +16089,7 @@ type LockedEvent implements Node {
   """
   Object that was locked.
   """
-  lockable: Lockable!
+  lockable: Lockable
 }
 
 """
