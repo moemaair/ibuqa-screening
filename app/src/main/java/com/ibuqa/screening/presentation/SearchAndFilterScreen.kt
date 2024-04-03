@@ -59,7 +59,7 @@ fun SearchAndFilterScreen() {
                 fontWeight = FontWeight.Light,
                 style = MaterialTheme.typography.bodyLarge)
 
-            Spacer(modifier = Modifier.height(35.dp))
+            //Spacer(modifier = Modifier.height(0.dp))
 
         }
 

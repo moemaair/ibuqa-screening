@@ -121,7 +121,7 @@ fun Home(
         }
     }
     Column(Modifier.fillMaxSize()) {
-        // First Column with 30% width
+        // First Column with 30% height
         Box(
             modifier = Modifier
                 .weight(0.3f)
@@ -130,9 +130,10 @@ fun Home(
                 .fillMaxHeight()
                 //.padding(15.dp)
         ) {
-            Column(modifier = Modifier) {
+            Column(modifier = Modifier.fillMaxHeight(),
+                verticalArrangement = Arrangement.SpaceBetween
+                ) {
                 SearchAndFilterScreen()
-
                 TextField(
                         value = viewModel.searchQuery.value.trim(),
                         onValueChange = viewModel::onSearch,
@@ -155,11 +156,9 @@ fun Home(
 
                 )
                 Spacer(modifier = Modifier.height(10.dp))
-
                 Row (modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 15.dp)
-                    ,
+                    .padding(horizontal = 15.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){
@@ -202,7 +201,7 @@ fun Home(
             
         }
         Spacer(modifier = Modifier.height(20.dp))
-        // First Column with 70% width
+        // First Column with 70% height
 
         Box(
             modifier = Modifier
