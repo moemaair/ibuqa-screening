@@ -10,8 +10,8 @@
 - etc
 
 ## Get the app 
-use this link to get the latest APK  ➡️
-[APK](https://appdistribution.firebase.dev/i/3740dbbed49e8ee8)
+while on your Android mobile, use this link to get the latest App version  ➡️
+[The APP](https://appdistribution.firebase.dev/i/3740dbbed49e8ee8)
 
 
 ## Final look
